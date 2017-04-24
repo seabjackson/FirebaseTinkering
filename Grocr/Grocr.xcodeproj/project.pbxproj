@@ -21,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		123312791EA692E3006B2D8C /* Grocr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Grocr.entitlements; sourceTree = "<group>"; };
 		1293BE971EA5CACB00D24F31 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9BA2A2DB5BA4733818152B9B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A898E3AE11425E4495FAC93A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		BB23855E1B3DD5AB0079CD01 /* Grocr */ = {
 			isa = PBXGroup;
 			children = (
+				123312791EA692E3006B2D8C /* Grocr.entitlements */,
 				BB2385881B3DD9550079CD01 /* Models */,
 				BB2385811B3DD8310079CD01 /* Controllers */,
 				BB2385821B3DD8490079CD01 /* Layouts */,
@@ -181,6 +183,7 @@
 				TargetAttributes = {
 					BB23855B1B3DD5AB0079CD01 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 86SYWTB5Q2;
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -188,7 +191,7 @@
 								enabled = 0;
 							};
 							com.apple.Keychain = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -402,13 +405,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Grocr/Grocr.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 86SYWTB5Q2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Grocr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = rw.firebase.gettingstarted;
+				PRODUCT_BUNDLE_IDENTIFIER = seabjackson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -425,13 +430,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Grocr/Grocr.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 86SYWTB5Q2;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Grocr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = rw.firebase.gettingstarted;
+				PRODUCT_BUNDLE_IDENTIFIER = seabjackson;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Grocr/Grocr-Bridging-Header.h";

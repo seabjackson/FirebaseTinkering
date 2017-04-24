@@ -28,6 +28,7 @@ class GroceryListTableViewController: UITableViewController {
   // MARK: Constants
   let listToUsers = "ListToUsers"
   let ref = FIRDatabase.database().reference(withPath: "grocery-items")
+  let usersRef = FIRDatabase.database().reference(withPath: "online")
   
   // MARK: Properties 
   var items: [GroceryItem] = []
@@ -50,7 +51,7 @@ class GroceryListTableViewController: UITableViewController {
     
     user = User(uid: "FakeId", email: "hungry@person.food")
     
-    ref.observe(.value, with: { snapshot in
+    ref.queryOrdered(byChild: "completed").observe(.value, with: { snapshot in
       var newItems = [GroceryItem]()
       
       guard snapshot.childrenCount > 0 else { return }
@@ -63,6 +64,23 @@ class GroceryListTableViewController: UITableViewController {
       self.items = newItems
       self.tableView.reloadData()
     })
+    
+    FIRAuth.auth()!.addStateDidChangeListener { (auth, user) in
+      guard let user = user else { return }
+      self.user = User(authData: user)
+      let currentUserRef = self.usersRef.child(self.user.uid)
+      currentUserRef.setValue(self.user.email)
+      currentUserRef.onDisconnectRemoveValue()
+    }
+    
+    usersRef.observe(.value, with: { (snapshot) in
+      if snapshot.exists() {
+        self.userCountBarButtonItem?.title = snapshot.childrenCount.description
+      } else {
+        self.userCountBarButtonItem?.title = "0"
+      }
+    })
+  
   }
   
   
@@ -95,8 +113,8 @@ class GroceryListTableViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      items.remove(at: indexPath.row)
-      tableView.reloadData()
+      let groceryItem = items[indexPath.row]
+      groceryItem.ref?.removeValue()
     }
   }
   
@@ -106,7 +124,7 @@ class GroceryListTableViewController: UITableViewController {
     let toggledCompletion = !groceryItem.completed
     
     toggleCellCheckbox(cell, isCompleted: toggledCompletion)
-    groceryItem.completed = toggledCompletion
+    groceryItem.ref?.updateChildValues(["completed": toggledCompletion])
     tableView.reloadData()
   }
   

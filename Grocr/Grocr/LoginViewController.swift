@@ -21,8 +21,19 @@
  */
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    FIRAuth.auth()!.addStateDidChangeListener() { auth, user in
+      if user != nil {
+        self.performSegue(withIdentifier: self.loginToList, sender: nil)
+      }
+    }
+  }
   
   // MARK: Constants
   let loginToList = "LoginToList"
@@ -33,7 +44,12 @@ class LoginViewController: UIViewController {
   
   // MARK: Actions
   @IBAction func loginDidTouch(_ sender: AnyObject) {
-    performSegue(withIdentifier: loginToList, sender: nil)
+//    FIRAuth.auth()!.signIn(withEmail: textFieldLoginEmail.text!, password: textFieldLoginPassword.text!)
+    FIRAuth.auth()!.signIn(withEmail: textFieldLoginEmail.text!, password: textFieldLoginPassword.text!) { (user, error) in
+      if error != nil {
+        self.performSegue(withIdentifier: self.loginToList, sender: nil)
+      }
+    }
   }
   
   @IBAction func signUpDidTouch(_ sender: AnyObject) {
@@ -43,7 +59,14 @@ class LoginViewController: UIViewController {
     
     let saveAction = UIAlertAction(title: "Save",
                                    style: .default) { action in
+                                    let emailField = alert.textFields![0]
+                                    let passWordField = alert.textFields![0]
                                     
+                                    FIRAuth.auth()!.createUser(withEmail: emailField.text!, password: passWordField.text!) { user, error in
+                                      if error == nil {
+                                        FIRAuth.auth()!.signIn(withEmail: self.textFieldLoginEmail.text!, password: self.textFieldLoginPassword.text!)
+                                      }
+                                    }
     }
     
     let cancelAction = UIAlertAction(title: "Cancel",
